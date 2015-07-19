@@ -16,8 +16,9 @@ setuptools.setup(
         'nose',
         'python-spidermonkey',
     ],
-    setup_requires=[
-        'nose-cov>=1.6',
+    tests_require=[
+        'nose-cov',
+        'flexmock',
     ],
     entry_points={
         'nose.plugins.0.10': [

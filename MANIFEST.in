@@ -1,2 +1,2 @@
 recursive-include nosescript/tests *
-include nosescript/qunit-api.js
+recursive-include nosescript/resources *

@@ -24,3 +24,5 @@ class TestRunner(object):
             self._ctx.execute(script, filename=path)
         for test in self._qunit.tests:
             yield test
+        if not len(self._qunit.tests):
+            yield False

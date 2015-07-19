@@ -4,10 +4,18 @@ import unittest
 import pkg_resources
 
 LOG = logging.getLogger('nose.' + __name__)
+RES_PATH = 'nosescript.resources'
 
 
 def escape_literal(name):
     return re.sub('[^a-zA-Z0-9.]', '_', name)
+
+
+def import_resource(ctx, name):
+
+    r_string = pkg_resources.resource_string(RES_PATH, name)
+    r_path = pkg_resources.resource_filename(RES_PATH, name)
+    ctx.execute(r_string, filename=r_path)
 
 
 class JsException(Exception):
@@ -15,10 +23,10 @@ class JsException(Exception):
         message = '{}: {}'.format(error.name, error.message)
         super(JsException, self).__init__(message)
         self.traceback = None
-        for line in error.stack.splitlines()[1:]:
+        for line in error.stack.splitlines()[:-1]:
             match = re.match('([^(@]*)(\(.*\))?@(.*):(\d*)', line)
             name, args, fname, lineno = match.groups()
-            if not fname:
+            if not fname or 'qunit-api.js' in fname:
                 continue
             if not name:
                 name = '<Anonymous>'
@@ -99,17 +107,15 @@ class QUnit(object):
         self._current_module = None
         self.ctx = ctx
         ctx.add_global('QUnit', self)
-        qunit = pkg_resources.resource_filename('nosescript', 'qunit-api.js')
-        ctx.execute(pkg_resources.resource_string('nosescript',
-                                                  'qunit-api.js'),
-                    filename=qunit)
+        import_resource(ctx, 'json2.js')
+        import_resource(ctx, 'qunit-api.js')
 
     def _module(self, name, hooks={}):
         self._current_module = QUnitModule(name, hooks)
 
-    def _report_failure(self, failure):
-        raise JsException(failure)
-
     def _test(self, name, test):
         case = QUnitCase(self._current_module, name, test, self)
         self.tests.add(case)
+
+    def warn(self, msg):
+        LOG.warn(msg)
