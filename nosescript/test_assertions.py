@@ -4,13 +4,17 @@ import tempfile
 import nose.config
 import unittest.result
 
-from . import unit
+from .unit import NoseScriptUnit
 
 
 class TestUnitPlugin(unittest.TestCase):
+    """
+    Minimal testing to ensure failures are raised properly, as other
+    tests build on this.
+    """
     def setUp(self):
         conf = nose.config.Config()
-        self.plug = unit.NoseScriptUnit()
+        self.plug = NoseScriptUnit()
         self.plug.configure(None, conf)
         self.plug.conf = conf
 
