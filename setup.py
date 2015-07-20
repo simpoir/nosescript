@@ -8,6 +8,20 @@ setuptools.setup(
     version=nosescript.__version__,
     description="A Nose plugin for JavaScript tests.",
     zip_safe=False,
+    url="https://github.com/simpoir/nosescript",
+    author="Simon Poirier",
+    author_email="simpoir+nosescript@gmail.com",
+    license="MIT",
+    classifiers=[
+        "Development Status :: 2 - Pre-Alpha",
+        "Environment :: Plugins",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Topic :: Software Development :: Testing",
+    ],
+
     packages=setuptools.find_packages(exclude=[
         "*.tests", "*.tests.*", "tests.*", "tests",
     ]),
