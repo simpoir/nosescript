@@ -26,6 +26,9 @@ setuptools.setup(
         "*.tests", "*.tests.*", "tests.*", "tests",
     ]),
     include_package_data=True,
+    setup_requires=[
+        'wheel',
+    ],
     install_requires=[
         'nose',
         'python-spidermonkey',
