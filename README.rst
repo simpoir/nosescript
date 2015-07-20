@@ -4,6 +4,10 @@ Description
 A module for adding some QC-related features for python projects integrating
 a bit of javascript.
 
+And it looks like
+
+.. image:: screenshot.png
+
 
 Requirements
 ============
